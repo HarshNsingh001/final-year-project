@@ -1,0 +1,7 @@
+{
+  "name": "Student Health Monitor",
+  "description": "Mobile-first web application for real-time student health monitoring via Web Bluetooth.",
+  "requestFramePermissions": [
+    "bluetooth"
+  ]
+}
