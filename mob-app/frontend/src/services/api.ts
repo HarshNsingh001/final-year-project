@@ -10,15 +10,12 @@
  */
 import { Capacitor } from '@capacitor/core';
 
-// Backend base URL — dynamic based on platform
-// On Android (Capacitor), the app runs on the phone, so localhost won't work.
-// Change BACKEND_IP to your laptop's local WiFi IP (find with: ipconfig / ifconfig).
-const BACKEND_IP = '192.168.1.6'; // Harsh's laptop WiFi IP
-const BACKEND_PORT = '8080';
+// Backend base URL — Production (Render) or Local development
+const RENDER_URL = 'https://final-year-project-1lcx.onrender.com/api/mobile';
+const LOCAL_URL = 'http://localhost:8080/api/mobile';
 
-const API_BASE_URL = Capacitor.isNativePlatform()
-  ? `http://${BACKEND_IP}:${BACKEND_PORT}/api/mobile`
-  : 'http://localhost:8080/api/mobile';
+// Use production URL by default, switch to LOCAL_URL for local development
+const API_BASE_URL = RENDER_URL;
 
 /**
  * Get stored JWT token from localStorage.

@@ -53,11 +53,13 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        // Specify allowed origins for production security
-        configuration.setAllowedOrigins(List.of(
-            "http://localhost:3000",
-            "http://localhost:5173",
-            "https://final-year-project-virid-eta.vercel.app"
+        // Allow web origins (Vercel, local dev) and mobile app origins (Capacitor)
+        configuration.setAllowedOriginPatterns(List.of(
+            "http://localhost:*",
+            "https://final-year-project-virid-eta.vercel.app",
+            "capacitor://localhost",
+            "ionic://localhost",
+            "http://localhost"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "X-Requested-With", "Accept"));
