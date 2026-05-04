@@ -32,18 +32,24 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const [statsRes, chartRes, usersRes, alertsRes] = await Promise.all([
-          api.getDashboardStats(),
-          api.getChartData(20),
-          api.getUsers(),
+          api.getDashboardStats().catch(() => null),
+          api.getChartData(20).catch(() => []),
+          api.getUsers().catch(() => []),
           fetch('http://localhost:8080/api/alerts/active', {
             headers: { 'Authorization': `Bearer ${localStorage.getItem('healthcloud_token')}` }
-          }).then(r => r.json()),
+          }).then(r => {
+             if (r.status === 401 || r.status === 403) {
+                localStorage.removeItem('healthcloud_token');
+                window.location.reload();
+             }
+             return r.json();
+          }).catch(() => []),
         ]);
         
-        setStats(statsRes);
-        setChartData(chartRes);
-        setUsers(usersRes);
-        setAlerts(alertsRes);
+        setStats(statsRes?.error ? null : statsRes);
+        setChartData(Array.isArray(chartRes) ? chartRes : []);
+        setUsers(Array.isArray(usersRes) ? usersRes : []);
+        setAlerts(Array.isArray(alertsRes) ? alertsRes : []);
         setLoading(false);
       } catch (err) {
         console.error("Dashboard data sync failed", err);
