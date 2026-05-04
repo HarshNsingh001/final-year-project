@@ -56,7 +56,7 @@ public class SecurityConfig {
         // Allow web origins (Vercel, local dev) and mobile app origins (Capacitor)
         configuration.setAllowedOriginPatterns(List.of(
             "http://localhost:*",
-            "https://final-year-project-virid-eta.vercel.app",
+            "https://*.vercel.app",
             "capacitor://localhost",
             "ionic://localhost",
             "http://localhost"
